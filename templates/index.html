@@ -1,0 +1,52 @@
+<html>
+
+  <head>
+    <title>MasterBaiter</title>
+
+    <style>
+      body            { font-family: sans-serif; }
+      textarea        { font-family: sans-serif; }
+
+      {% if status == 1 %}
+        textarea            { background: seagreen; }
+      {% elif status == 2 %}
+        textarea            { background: firebrick; }
+      {% else %}
+        textarea            { background: whitesmoke; }
+      {% endif %}
+    </style>
+
+  <body>
+
+  {% if status == 0 %}
+    <h1>Status: No data</h1>
+  
+  {% elif status == 1 %}
+    <h1>Status: Everything is gucci</h1>
+    {% if not disablesound %}<audio autoplay><source src={{ url_for("static", filename = "allclear.wav") }} type="audio/wav"></audio>{% endif %}
+  
+  {% elif status == 2 %}
+    <h1>Status: Bait! Detected: {{ status_reason }}</h1>
+    {% if not disablesound %}<audio autoplay><source src={{ url_for("static", filename = "alarm.wav") }} type="audio/wav"></audio>{% endif %}
+  
+  {% else %}
+    <h1>Status: </h1>
+  
+  {% endif %}
+
+  <form action="." method="POST">
+    <textarea name="scantext" placeholder="Enter scan results here" style="width:500px; height:500px; resize:none;">{{ oldscan }}</textarea>
+    <br />
+    <input type="submit" name="submitbutton" value="Check Scan" style="width:500px; border-radius:12px; font-size:large; font-weight:bold;">
+    <br />
+    Disable sounds
+    {% if disablesound %}
+      <input type="checkbox" name="disablesound" checked="checked">
+    {% else %}
+      <input type="checkbox" name="disablesound">
+    {% endif %}
+  </form>
+
+  </body>
+
+</html>
