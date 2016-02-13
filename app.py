@@ -1,17 +1,15 @@
 from flask import Flask, render_template, request
 
-disablesound = False
 naughty_words = ('ozone', 'cynosural field generator')
 
 app = Flask(__name__)
 
 @app.route('/')
 def main():
-    return render_template('index.html', status=0, disablesound=disablesound)
+    return render_template('index.html', status=0)
 
 @app.route('/', methods=['POST'])
 def checkscan():
-    global disablesound
     disablesound = ('disablesound' in request.form)
 
     scantext = request.form['scantext']
